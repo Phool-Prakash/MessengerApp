@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:messenger_app/model/data.dart' as data;
+import 'package:messenger_app/widgets/email_list_view.dart';
+import 'model/models.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,14 +20,16 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Feed(),
+      home: Feed(
+        currentUser: data.user_0,
+      ),
     );
   }
 }
 
 class Feed extends StatefulWidget {
-  const Feed({super.key});
-
+  const Feed({super.key, required this.currentUser});
+  final User currentUser;
   @override
   State<Feed> createState() => _FeedState();
 }
@@ -37,8 +42,10 @@ class _FeedState extends State<Feed> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: _backgroundColor,
-      ),
+          color: _backgroundColor,
+          child: EmailListView(
+            currentUser: widget.currentUser,
+          )),
       floatingActionButton: FloatingActionButton(
         backgroundColor: _colorScheme.tertiaryContainer,
         foregroundColor: _colorScheme.onTertiaryContainer,
