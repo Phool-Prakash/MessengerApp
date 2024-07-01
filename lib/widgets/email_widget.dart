@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:messenger_app/widgets/star_button.dart';
 
 import '../model/models.dart';
 
@@ -149,12 +150,54 @@ class _EmailContentState extends State<EmailContent> {
                     ),
                   ],
                 )),
-                if(constraints.maxWidth-200>0) ...[
-                  const
-                ]
+                if (constraints.maxWidth - 200 > 0) ...[const StarButton()]
               ],
             );
-          })
+          }),
+          const SizedBox(
+            width: 8,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (widget.isPreview) ...[
+                Text(
+                  widget.email.subject,
+                  style: const TextStyle(fontSize: 18)
+                      .copyWith(color: _colorScheme.onSurface),
+                )
+              ],
+              if (widget.isThreaded) ...[
+                contentSpacer,
+                Text(
+                  "To ${widget.email.recipients.map((recipient) => recipient.name.fName).join(", ")}",
+                  style: _textTheme.bodyMedium,
+                )
+              ],
+              contentSpacer,
+              Text(
+                widget.email.content,
+                maxLines: widget.isPreview ? 2 : 100,
+                overflow: TextOverflow.ellipsis,
+                style: contentTextStyle,
+              )
+            ],
+          ),
+          const SizedBox(
+            width: 12,
+          ),
+          widget.email.attachment.isNotEmpty
+              ? Container(
+                  height: 96,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image:
+                              AssetImage(widget.email.attachment.first.url))),
+                )
+              : const SizedBox.shrink(),
+          if (!widget.isPreview) ...[const EmailReplyOptions()]
         ],
       ),
     );
