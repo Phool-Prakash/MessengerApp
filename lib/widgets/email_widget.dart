@@ -59,11 +59,6 @@ class _EmailWidgetState extends State<EmailWidget> {
                 isPreview: widget.isPreview,
                 isThreaded: widget.isThreaded,
                 isSelected: widget.isSelected),
-            EmailContent(
-                email: widget.email,
-                isPreview: widget.isPreview,
-                isThreaded: widget.isThreaded,
-                isSelected: widget.isSelected)
           ],
         ),
       ),
