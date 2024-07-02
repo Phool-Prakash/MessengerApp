@@ -57,7 +57,7 @@ final User user_10 = User(
 
 final List<Email> emails = [
   Email(
-    sender: user_1,
+    sender: user_0,
     recipients: [],
     subject: 'Dinner Club',
     content: "I think it's time for us to finally try that new noodle shop"
@@ -78,7 +78,7 @@ final List<Email> emails = [
         " See you all at the usual time?",
   ),
   Email(
-      sender: user_3,
+      sender: user_6,
       recipients: [],
       subject: 'This food show is made for you',
       content: "Ping– you'd love this new food show I started watching. "
