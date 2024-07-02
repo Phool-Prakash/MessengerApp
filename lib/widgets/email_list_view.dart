@@ -20,7 +20,7 @@ class EmailListView extends StatelessWidget {
       child: ListView(
         children: [
           const SizedBox(
-            height: 8,
+            height:8,
           ),
           search_bar.SearchBar(
             currentUser: currentUser,
@@ -30,7 +30,7 @@ class EmailListView extends StatelessWidget {
           ),
           ...List.generate(data.emails.length, (index) {
             return Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom:6),
               child: EmailWidget(
                 email: data.emails[index],
                 onSelected: onSelected != null
