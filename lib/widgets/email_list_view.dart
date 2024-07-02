@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:messenger_app/widgets/email_widget.dart';
 import 'search_bar.dart' as search_bar;
 import 'package:messenger_app/model/data.dart' as data;
 import '../model/models.dart';
@@ -29,7 +30,16 @@ class EmailListView extends StatelessWidget {
           ),
           ...List.generate(data.emails.length, (index) {
             return Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: EdgeInsets.only(bottom: 8),
+              child: EmailWidget(
+                email: data.emails[index],
+                onSelected: onSelected != null
+                    ? () {
+                        onSelected!(index);
+                      }
+                    : null,
+                isSelected: selectedIndex == index,
+              ),
             );
           })
         ],

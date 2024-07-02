@@ -54,6 +54,16 @@ class _EmailWidgetState extends State<EmailWidget> {
             if (widget.showHeadline) ...[
               EmailHeadline(email: widget.email, isSelected: widget.isSelected)
             ],
+            EmailContent(
+                email: widget.email,
+                isPreview: widget.isPreview,
+                isThreaded: widget.isThreaded,
+                isSelected: widget.isSelected),
+            EmailContent(
+                email: widget.email,
+                isPreview: widget.isPreview,
+                isThreaded: widget.isThreaded,
+                isSelected: widget.isSelected)
           ],
         ),
       ),
