@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:messenger_app/destinations/destinations.dart';
 import 'package:messenger_app/model/data.dart' as data;
+import 'package:messenger_app/widgets/disappearing_navigation_rail.dart';
 import 'package:messenger_app/widgets/email_list_view.dart';
 import 'model/models.dart';
 
@@ -41,38 +42,71 @@ class _FeedState extends State<Feed> {
       _colorScheme.primary.withOpacity(0.14), _colorScheme.surface);
 
   int selectedIndex = 0;
+
+  bool wideScreen = false;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    final double width = MediaQuery.of(context).size.width;
+    wideScreen = width > 600;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            color: _backgroundColor,
-            child: EmailListView(
-              selectedIndex: selectedIndex,
-              onSelected: (index) {
-                setState(() {
-                  selectedIndex = index;
-                });
-              },
-              currentUser: widget.currentUser,
-            )),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: _colorScheme.tertiaryContainer,
-          foregroundColor: _colorScheme.onTertiaryContainer,
-          onPressed: () {},
-          child: const Icon(Icons.add),
+        body: Row(
+          children: [
+            if (wideScreen)
+              DisappearingNavigationRail(
+                backgroundColor: _backgroundColor,
+                selectedIndex: selectedIndex,
+                onDestinationSelected: (index) {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                },
+              ),
+            Expanded(
+              child: Container(
+                  color: _backgroundColor,
+                  child: EmailListView(
+                    selectedIndex: selectedIndex,
+                    onSelected: (index) {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    },
+                    currentUser: widget.currentUser,
+                  )),
+            ),
+          ],
         ),
-        bottomNavigationBar: NavigationBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          destinations: destinations.map<NavigationDestination>((d) {
-            return NavigationDestination(icon: Icon(d.icon), label: d.label);
-          }).toList(),
-          selectedIndex: selectedIndex,
-          onDestinationSelected: (index) {
-            setState(() {
-              selectedIndex = index;
-            });
-          },
-        ));
+        floatingActionButton: wideScreen
+            ? null
+            : FloatingActionButton(
+                backgroundColor: _colorScheme.tertiaryContainer,
+                foregroundColor: _colorScheme.onTertiaryContainer,
+                onPressed: () {},
+                child: const Icon(Icons.add),
+              ),
+        bottomNavigationBar: wideScreen
+            ? null
+            : NavigationBar(
+                elevation: 0,
+                backgroundColor: Colors.white,
+                destinations: destinations.map<NavigationDestination>((d) {
+                  return NavigationDestination(
+                      icon: Icon(d.icon), label: d.label);
+                }).toList(),
+                selectedIndex: selectedIndex,
+                onDestinationSelected: (index) {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                },
+              ));
   }
 }
