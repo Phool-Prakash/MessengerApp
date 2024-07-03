@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:messenger_app/animations/animations.dart';
 import 'package:messenger_app/destinations/destinations.dart';
 import 'package:messenger_app/model/data.dart' as data;
+import 'package:messenger_app/transitions/list_detail_transition.dart';
 import 'package:messenger_app/widgets/animated_floating_action_button.dart';
 import 'package:messenger_app/widgets/disappearing_bottom_navigation_bar.dart';
 import 'package:messenger_app/widgets/disappearing_navigation_rail.dart';
 import 'package:messenger_app/widgets/email_list_view.dart';
+import 'package:messenger_app/widgets/reply_list_view.dart';
 import 'model/models.dart';
 
 void main() {
@@ -112,14 +114,18 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
                 Expanded(
                   child: Container(
                       color: _backgroundColor,
-                      child: EmailListView(
-                        selectedIndex: selectedIndex,
-                        onSelected: (index) {
-                          setState(() {
-                            selectedIndex = index;
-                          });
-                        },
-                        currentUser: widget.currentUser,
+                      child: ListDetailTransition(
+                        animation: _railAnimation,
+                        two: const ReplyListView(),
+                        one: EmailListView(
+                          selectedIndex: selectedIndex,
+                          onSelected: (index) {
+                            setState(() {
+                              selectedIndex = index;
+                            });
+                          },
+                          currentUser: widget.currentUser,
+                        ),
                       )),
                 ),
               ],
